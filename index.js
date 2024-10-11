@@ -44,7 +44,8 @@ const displayAllPhones = (phones) =>{
     <h2 class="card-title">${brand}</h2>
     <p>${slug}</p>
     <div class="card-actions">
-      <button class="btn btn-primary">Show Details</button>
+     
+      <button onclick ="phoneDetails('${slug}')" class="btn btn-primary">Show Details</button>
     </div>
   </div>
 </div>
@@ -82,6 +83,46 @@ setTimeout(function () {
 },2000)
 
 }
+
+
+// phone details function 
+const phoneDetails = async(slugs) =>{
+// console.log(slug);
+const response = await fetch(`https://openapi.programming-hero.com/api/phone/${slugs}`)
+const data = await response.json()
+console.log(data.data);
+
+const {brand, image, slug} = data.data
+
+const modalContainer = document.getElementById('modal-container')
+modalContainer.innerHTML = `
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">  
+    <h3 class="text-lg font-bold">Hello!</h3>
+    <p class="py-4">Press ESC key or click the button below to close</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+`
+
+my_modal_1.showModal();
+
+
+
+}
+
+
+
+
+
+
+
+
 
 
 loadAllPhones(false, "iphone")
